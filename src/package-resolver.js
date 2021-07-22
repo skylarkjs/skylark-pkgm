@@ -38,6 +38,8 @@ export default class PackageResolver {
     this.lockfile = lockfile;
     this.config = config;
     this.delayedResolveQueue = [];
+
+    this.dependings = [];  // added by lwf
   }
 
   // whether the dependency graph will be flattened

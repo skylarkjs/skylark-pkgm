@@ -1,7 +1,7 @@
 {
   "name": "skylark-pkgm",
   "installationMethod": "unknown",
-  "version": "1.22.10",
+  "version": "0.9.0",
   "license": "BSD-2-Clause",
   "preferGlobal": true,
   "description": "📦🐈 Fast, reliable, and secure dependency management.",

@@ -301,6 +301,12 @@ export default class PackageRequest {
     // optional deps
     for (const depName in info.optionalDependencies) {
       const depPattern = depName + '@' + info.optionalDependencies[depName];
+      //added by lwf begin
+      if (this.resolver.dependings.includes(depPattern)) {
+        continue;
+      }
+      this.resolver.dependings.push(depPattern);
+      //dded by lwf  end
       deps.push(depPattern);
       promises.push(
         this.resolver.find({
