@@ -5,13 +5,13 @@ import type Config from './config.js';
 import {MessageError} from './errors.js';
 import map from './util/map.js';
 import {entries} from './util/misc.js';
-import {version as yarnVersion} from './util/yarn-version.js';
+import {version as spkgmVersion} from './util/spkgm-version.js';
 import {satisfiesWithPrereleases} from './util/semver.js';
 
 const semver = require('semver');
 
 const VERSIONS = Object.assign({}, process.versions, {
-  yarn: yarnVersion,
+  spkgm: spkgmVersion,
 });
 
 type PartialManifest = $Shape<Manifest>;
@@ -73,7 +73,7 @@ export function testEngine(name: string, range: string, versions: Versions, loos
     return true;
   }
 
-  if (name === 'yarn' && satisfiesWithPrereleases(actual, range, looseSemver)) {
+  if (name === 'spkgm' && satisfiesWithPrereleases(actual, range, looseSemver)) {
     return true;
   }
 

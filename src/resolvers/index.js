@@ -3,11 +3,11 @@
 import BaseResolver from './base-resolver.js';
 
 import RegistryNpm from './registries/npm-resolver.js';
-import RegistryYarn from './registries/yarn-resolver.js';
+import RegistryYarn from './registries/spkgm-resolver.js';
 
 export const registries = {
   npm: RegistryNpm,
-  yarn: RegistryYarn,
+  spkgm: RegistryYarn,
 };
 
 //

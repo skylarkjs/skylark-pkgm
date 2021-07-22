@@ -28,7 +28,7 @@ export const IGNORE_MANIFEST_KEYS: Set<string> = new Set([
 
 // We treat these configs as internal, thus not expose them to process.env.
 // This helps us avoid some gyp issues when building native modules.
-// See https://github.com/yarnpkg/yarn/issues/2286.
+// See https://github.com/spkgmpkg/spkgm/issues/2286.
 const IGNORE_CONFIG_KEYS = ['lastUpdateCheck'];
 
 let wrappersFolder = null;
@@ -45,7 +45,7 @@ export async function getWrappersFolder(config: Config): Promise<string> {
   });
 
   await makePortableProxyScript(process.execPath, wrappersFolder, {
-    proxyBasename: 'yarn',
+    proxyBasename: 'spkgm',
     prependArguments: [process.argv[1]],
   });
 
@@ -70,7 +70,7 @@ export async function makeEnv(
     ...process.env,
   };
 
-  // Merge in the `env` object specified in .yarnrc
+  // Merge in the `env` object specified in .spkgmrc
   const customEnv = config.getOption('env');
   if (customEnv && typeof customEnv === 'object') {
     Object.assign(env, customEnv);
@@ -125,9 +125,9 @@ export async function makeEnv(
     }
   }
 
-  // add npm_config_* and npm_package_config_* from yarn config
+  // add npm_config_* and npm_package_config_* from spkgm config
   const keys: Set<string> = new Set([
-    ...Object.keys(config.registries.yarn.config),
+    ...Object.keys(config.registries.spkgm.config),
     ...Object.keys(config.registries.npm.config),
   ]);
   const cleaned = Array.from(keys)

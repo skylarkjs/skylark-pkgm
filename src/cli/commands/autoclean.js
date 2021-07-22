@@ -54,7 +54,7 @@ wercker.yml
 .jshintrc
 .flowconfig
 .documentup.json
-.yarn-metadata.json
+.spkgm-metadata.json
 .travis.yml
 
 # misc

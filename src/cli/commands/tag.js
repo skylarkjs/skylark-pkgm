@@ -129,7 +129,7 @@ export const {run, hasWrapper, examples} = buildSubCommands(
     },
 
     async rm(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<void> {
-      reporter.warn(`\`yarn tag rm\` is deprecated. Please use \`yarn tag remove\`.`);
+      reporter.warn(`\`spkgm tag rm\` is deprecated. Please use \`spkgm tag remove\`.`);
       await remove(config, reporter, flags, args);
     },
 
@@ -138,7 +138,7 @@ export const {run, hasWrapper, examples} = buildSubCommands(
     },
 
     async ls(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<void> {
-      reporter.warn(`\`yarn tag ls\` is deprecated. Please use \`yarn tag list\`.`);
+      reporter.warn(`\`spkgm tag ls\` is deprecated. Please use \`spkgm tag list\`.`);
       await list(config, reporter, flags, args);
     },
 

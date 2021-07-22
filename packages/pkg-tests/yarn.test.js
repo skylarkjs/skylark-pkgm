@@ -36,7 +36,7 @@ const pkgDriver = generatePkgDriver({
 
     const res = await execFile(
       process.execPath,
-      [`${process.cwd()}/../../bin/yarn.js`, ...beforeArgs, command, ...middleArgs, ...args],
+      [`${process.cwd()}/../../bin/spkgm.js`, ...beforeArgs, command, ...middleArgs, ...args],
       {
         env: Object.assign(
           {

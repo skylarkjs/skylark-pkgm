@@ -21,12 +21,12 @@ if ($Env:YARN_RC -eq 'true') {
 if ($Env:YARN_VERSION) {
   $latest_version = $Env:YARN_VERSION
 } else {
-  Write-Output 'Getting Yarn version from https://yarnpkg.com/latest-version'
-  $latest_version = [String](Invoke-WebRequest -Uri https://yarnpkg.com/latest-version -UseBasicParsing)
+  Write-Output 'Getting Yarn version from https://spkgmpkg.com/latest-version'
+  $latest_version = [String](Invoke-WebRequest -Uri https://spkgmpkg.com/latest-version -UseBasicParsing)
 }
 
 Write-Output "Checking if $latest_version is already on Chocolatey..."
-$choco_output = choco list yarn --exact --version $latest_version | Out-String
+$choco_output = choco list spkgm --exact --version $latest_version | Out-String
 if ($choco_output -notmatch '0 packages found') {
   Write-Output 'Already on Chocolatey. Nothing to do!'
   Exit
@@ -41,7 +41,7 @@ rm artifacts/*.nupkg
 # Download the installer so we can compute its hash
 # Keep this in sync with chocolateyInstall.ps1.in
 # This is intentionally not using /latest.msi to ensure the URL used by the Chocolatey package is valid.
-$url = "https://yarnpkg.com/downloads/$latest_version/yarn-$latest_version.msi"
+$url = "https://spkgmpkg.com/downloads/$latest_version/spkgm-$latest_version.msi"
 $installer_file = [IO.Path]::GetTempFileName()
 Invoke-WebRequest -Uri $url -OutFile $installer_file
 
@@ -53,7 +53,7 @@ $hash = (Get-FileHash -Path $installer_file -Algorithm SHA256).Hash
   -replace '{CHECKSUM}', $hash | 
   Set-Content $PSScriptRoot\..\resources\win-chocolatey\tools\chocolateyinstall.ps1
   
-choco pack $PSScriptRoot\..\resources\win-chocolatey\yarn.nuspec --version $latest_version
+choco pack $PSScriptRoot\..\resources\win-chocolatey\spkgm.nuspec --version $latest_version
 mv *.nupkg artifacts
 
 if (!$Publish) {

@@ -212,7 +212,7 @@ const {run, setFlags: _setFlags} = buildSubCommands('global', {
     await updateCwd(config);
 
     const updateBins = await initUpdateBins(config, reporter, flags);
-    if (args.indexOf('yarn') !== -1) {
+    if (args.indexOf('spkgm') !== -1) {
       reporter.warn(reporter.lang('packageContainsYarnAsGlobal'));
     }
 
@@ -235,7 +235,7 @@ const {run, setFlags: _setFlags} = buildSubCommands('global', {
   },
 
   async ls(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<void> {
-    reporter.warn(`\`yarn global ls\` is deprecated. Please use \`yarn global list\`.`);
+    reporter.warn(`\`spkgm global ls\` is deprecated. Please use \`spkgm global list\`.`);
     await list(config, reporter, flags, args);
   },
 

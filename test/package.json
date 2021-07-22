@@ -24,7 +24,7 @@
     "./": "./dist/uncompressed/skylark-langx-klass/"
   },
   "dependencies": {
-    "skylark-langx-ns": "git+https://github.com/skylark-langx/skylark-langx-ns.git"
+    "skylark-langx": "git+https://github.com/skylark-langx/skylark-langx.git"
   },
   "engines": {
     "node": ">=0.8.0"

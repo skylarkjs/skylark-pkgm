@@ -1,7 +1,7 @@
 // Jenkins build jobs for Yarn
 // https://build.dan.cx/view/Yarn/
 
-job('yarn-version') {
+job('spkgm-version') {
   description 'Updates the version number on the Yarn website'
   label 'linux'
   authenticationToken "${YARN_VERSION_KEY}"
@@ -9,7 +9,7 @@ job('yarn-version') {
     git {
       branch 'master'
       remote {
-        github 'yarnpkg/website', 'ssh'
+        github 'spkgmpkg/website', 'ssh'
       }
       extensions {
         // Required so we can commit to master
@@ -36,8 +36,8 @@ job('yarn-version') {
     downstreamParameterized {
       // Other jobs to run when version number is bumped
       trigger([
-        'yarn-chocolatey',
-        'yarn-homebrew',
+        'spkgm-chocolatey',
+        'spkgm-homebrew',
       ]) {
         parameters {
           currentBuild()
@@ -49,15 +49,15 @@ job('yarn-version') {
   }
 }
 
-job('yarn-chocolatey') {
+job('spkgm-chocolatey') {
   displayName 'Yarn Chocolatey'
   description 'Ensures the Chocolatey package for Yarn is up-to-date'
   label 'windows'
   scm {
-    github 'yarnpkg/yarn', 'master'
+    github 'spkgmpkg/spkgm', 'master'
   }
   parameters {
-    // Passed from yarn-version job
+    // Passed from spkgm-version job
     stringParam 'YARN_VERSION'
     booleanParam 'YARN_RC'
   }
@@ -70,11 +70,11 @@ job('yarn-chocolatey') {
   }
 }
 
-job('yarn-homebrew') {
+job('spkgm-homebrew') {
   description 'Ensures the Homebrew package for Yarn is up-to-date'
   label 'linuxbrew'
   scm {
-    github 'yarnpkg/yarn', 'master'
+    github 'spkgmpkg/spkgm', 'master'
   }
   wrappers {
     credentialsBinding {
@@ -82,7 +82,7 @@ job('yarn-homebrew') {
     }
   }
   parameters {
-    // Passed from yarn-version job
+    // Passed from spkgm-version job
     stringParam 'YARN_VERSION'
     booleanParam 'YARN_RC'
   }

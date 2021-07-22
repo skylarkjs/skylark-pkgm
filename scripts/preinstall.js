@@ -1,14 +1,14 @@
 // This file is a bit weird, so let me explain with some context: we're working
 // to implement a tool called "Corepack" in Node. This tool will allow us to
 // provide a Yarn shim to everyone using Node, meaning that they won't need to
-// run `npm install -g yarn`.
+// run `npm install -g spkgm`.
 //
 // Still, we don't want to break the experience of people that already use `npm
-// install -g yarn`! And one annoying thing with npm is that they install their
+// install -g spkgm`! And one annoying thing with npm is that they install their
 // binaries directly inside the Node bin/ folder. And Because of this, they
 // refuse to overwrite binaries when they detect they don't belong to npm. Which
-// means that, since the "yarn" Corepack symlink belongs to Corepack and not npm,
-// running `npm install -g yarn` would crash by refusing to override the binary :/
+// means that, since the "spkgm" Corepack symlink belongs to Corepack and not npm,
+// running `npm install -g spkgm` would crash by refusing to override the binary :/
 //
 // And thus we have this preinstall script, which checks whether Yarn is being
 // installed as a global binary, and remove the existing symlink if it detects

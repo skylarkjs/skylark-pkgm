@@ -71,7 +71,7 @@ const nodeOptions = {
 const compiler = webpack({
   // devtool: 'inline-source-map',
   entry: {
-    [`artifacts/yarn-${version}.js`]: path.join(basedir, 'src/cli/index.js'),
+    [`artifacts/spkgm-${version}.js`]: path.join(basedir, 'src/cli/index.js'),
     'packages/lockfile/index.js': path.join(basedir, 'src/lockfile/index.js'),
   },
   module: {
@@ -151,7 +151,7 @@ const compilerLegacy = webpack({
     }),
   ],
   output: {
-    filename: `yarn-legacy-${version}.js`,
+    filename: `spkgm-legacy-${version}.js`,
     path: path.join(basedir, 'artifacts'),
     libraryTarget: 'commonjs2',
   },

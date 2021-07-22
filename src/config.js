@@ -224,11 +224,11 @@ export default class Config {
   }
 
   /**
-   * Get a config option from our yarn config.
+   * Get a config option from our spkgm config.
    */
 
   getOption(key: string, resolve: boolean = false): mixed {
-    const value = this.registries.yarn.getOption(key);
+    const value = this.registries.spkgm.getOption(key);
 
     if (resolve && typeof value === 'string' && value.length) {
       return resolveWithHome(value);
@@ -293,7 +293,7 @@ export default class Config {
     for (const key of Object.keys(registries)) {
       const Registry = registries[key];
 
-      const extraneousRcFiles = Registry === registries.yarn ? this.extraneousYarnrcFiles : [];
+      const extraneousRcFiles = Registry === registries.spkgm ? this.extraneousYarnrcFiles : [];
 
       // instantiate registry
       const registry = new Registry(
@@ -419,10 +419,10 @@ export default class Config {
 
     this.offlineCacheFolder = String(this.getOption('offline-cache-folder') || '') || null;
 
-    this.pruneOfflineMirror = Boolean(this.getOption('yarn-offline-mirror-pruning'));
+    this.pruneOfflineMirror = Boolean(this.getOption('spkgm-offline-mirror-pruning'));
     this.enableMetaFolder = Boolean(this.getOption('enable-meta-folder'));
-    this.enableLockfileVersions = Boolean(this.getOption('yarn-enable-lockfile-versions'));
-    this.linkFileDependencies = Boolean(this.getOption('yarn-link-file-dependencies'));
+    this.enableLockfileVersions = Boolean(this.getOption('spkgm-enable-lockfile-versions'));
+    this.linkFileDependencies = Boolean(this.getOption('spkgm-link-file-dependencies'));
     this.packBuiltPackages = Boolean(this.getOption('experimental-pack-script-packages-in-mirror'));
 
     this.autoAddIntegrity = !boolifyWithDefault(String(this.getOption('unsafe-disable-integrity-migration')), true);
@@ -608,14 +608,14 @@ export default class Config {
   getOfflineMirrorPath(packageFilename: ?string): ?string {
     let mirrorPath;
 
-    for (const key of ['npm', 'yarn']) {
+    for (const key of ['npm', 'spkgm']) {
       const registry = this.registries[key];
 
       if (registry == null) {
         continue;
       }
 
-      const registryMirrorPath = registry.config['yarn-offline-mirror'];
+      const registryMirrorPath = registry.config['spkgm-offline-mirror'];
 
       if (registryMirrorPath === false) {
         return null;
@@ -640,7 +640,7 @@ export default class Config {
   }
 
   /**
-   * Checker whether the folder input is a valid module folder. We output a yarn metadata
+   * Checker whether the folder input is a valid module folder. We output a spkgm metadata
    * file when we've successfully setup a folder so use this as a marker.
    */
 
@@ -676,7 +676,7 @@ export default class Config {
   }
 
   /**
-   * Read normalized package info according yarn-metadata.json
+   * Read normalized package info according spkgm-metadata.json
    * throw an error if package.json was not found
    */
 

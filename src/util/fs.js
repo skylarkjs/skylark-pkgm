@@ -160,7 +160,7 @@ async function buildActionsForCopy(
     const onFresh = data.onFresh || noop;
     const onDone = data.onDone || noop;
 
-    // TODO https://github.com/yarnpkg/yarn/issues/3751
+    // TODO https://github.com/spkgmpkg/spkgm/issues/3751
     // related to bundled dependencies handling
     if (files.has(dest.toLowerCase())) {
       reporter.verbose(`The case-insensitive file ${dest} shouldn't be copied twice in one bulk copy`);
@@ -375,7 +375,7 @@ async function buildActionsForHardlink(
     const onFresh = data.onFresh || noop;
     const onDone = data.onDone || noop;
     if (files.has(dest.toLowerCase())) {
-      // Fixes issue https://github.com/yarnpkg/yarn/issues/2734
+      // Fixes issue https://github.com/spkgmpkg/spkgm/issues/2734
       // When bulk hardlinking we have A -> B structure that we want to hardlink to A1 -> B1,
       // package-linker passes that modules A1 and B1 need to be hardlinked,
       // the recursive linking algorithm of A1 ends up scheduling files in B1 to be linked twice which will case
@@ -807,7 +807,7 @@ export async function hardlinksWork(dir: string): Promise<boolean> {
 
 // not a strict polyfill for Node's fs.mkdtemp
 export async function makeTempDir(prefix?: string): Promise<string> {
-  const dir = path.join(os.tmpdir(), `yarn-${prefix || ''}-${Date.now()}-${Math.random()}`);
+  const dir = path.join(os.tmpdir(), `spkgm-${prefix || ''}-${Date.now()}-${Math.random()}`);
   await unlink(dir);
   await mkdirp(dir);
   return dir;

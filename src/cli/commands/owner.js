@@ -171,7 +171,7 @@ export const {run, hasWrapper, examples} = buildSubCommands(
     },
 
     rm(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<boolean> {
-      reporter.warn(`\`yarn owner rm\` is deprecated. Please use \`yarn owner remove\`.`);
+      reporter.warn(`\`spkgm owner rm\` is deprecated. Please use \`spkgm owner remove\`.`);
       return remove(config, reporter, flags, args);
     },
 
@@ -180,7 +180,7 @@ export const {run, hasWrapper, examples} = buildSubCommands(
     },
 
     ls(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<boolean> {
-      reporter.warn(`\`yarn owner ls\` is deprecated. Please use \`yarn owner list\`.`);
+      reporter.warn(`\`spkgm owner ls\` is deprecated. Please use \`spkgm owner list\`.`);
       return list(config, reporter, flags, args);
     },
 

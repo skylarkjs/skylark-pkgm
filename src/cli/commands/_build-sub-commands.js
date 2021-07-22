@@ -39,7 +39,7 @@ export default function(rootCommandName: string, subCommands: SubCommands, usage
     if (usage && usage.length) {
       reporter.error(`${reporter.lang('usage')}:`);
       for (const msg of usage) {
-        reporter.error(`yarn ${rootCommandName} ${msg}`);
+        reporter.error(`spkgm ${rootCommandName} ${msg}`);
       }
     }
     return Promise.reject(new MessageError(reporter.lang('invalidCommand', subCommandNames.join(', '))));

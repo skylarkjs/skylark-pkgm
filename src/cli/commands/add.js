@@ -28,7 +28,7 @@ export class Add extends Install {
     const _flags = flags ? {...flags, workspaceRootIsCwd} : {workspaceRootIsCwd};
     super(_flags, config, reporter, lockfile);
     this.args = args;
-    // only one flag is supported, so we can figure out which one was passed to `yarn add`
+    // only one flag is supported, so we can figure out which one was passed to `spkgm add`
     this.flagToOrigin = [
       flags.dev && 'devDependencies',
       flags.optional && 'optionalDependencies',
@@ -173,7 +173,7 @@ export class Add extends Install {
   async init(): Promise<Array<string>> {
     const isWorkspaceRoot = this.config.workspaceRootFolder && this.config.cwd === this.config.workspaceRootFolder;
 
-    // running "yarn add something" in a workspace root is often a mistake
+    // running "spkgm add something" in a workspace root is often a mistake
     if (isWorkspaceRoot && !this.flags.ignoreWorkspaceRootCheck) {
       throw new MessageError(this.reporter.lang('workspacesAddRootCheck'));
     }
@@ -271,7 +271,7 @@ export class Add extends Install {
       const version = this.getPatternVersion(pattern, pkg);
       const ref = pkg._reference;
       invariant(ref, 'expected package reference');
-      // lookup the package to determine dependency type; used during `yarn upgrade`
+      // lookup the package to determine dependency type; used during `spkgm upgrade`
       const depType = patternOrigins.reduce((acc, prev) => {
         if (prev.indexOf(`${pkg.name}@`) === 0) {
           return this.rootPatternsToOrigin[prev];
@@ -279,7 +279,7 @@ export class Add extends Install {
         return acc;
       }, null);
 
-      // depType is calculated when `yarn upgrade` command is used
+      // depType is calculated when `spkgm upgrade` command is used
       const target = depType || this.flagToOrigin;
 
       f(pattern, ref.registry, target, pkg.name, version);
@@ -294,7 +294,7 @@ export function hasWrapper(commander: Object): boolean {
 export function setFlags(commander: Object) {
   commander.description('Installs a package and any packages that it depends on.');
   commander.usage('add [packages ...] [flags]');
-  commander.option('-W, --ignore-workspace-root-check', 'required to run yarn add inside a workspace root');
+  commander.option('-W, --ignore-workspace-root-check', 'required to run spkgm add inside a workspace root');
   commander.option('-D, --dev', 'save package to your `devDependencies`');
   commander.option('-P, --peer', 'save package to your `peerDependencies`');
   commander.option('-O, --optional', 'save package to your `optionalDependencies`');

@@ -22,7 +22,7 @@ import url from 'url';
 import ini from 'ini';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org/';
-const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^\/]+\.)?(yarnpkg\.com|npmjs\.(org|com))(\/|$)/;
+const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^\/]+\.)?(spkgmpkg\.com|npmjs\.(org|com))(\/|$)/;
 const REGEX_REGISTRY_HTTP_PROTOCOL = /^https?:/i;
 const REGEX_REGISTRY_PREFIX = /^(https?:)?\/\//i;
 const REGEX_REGISTRY_SUFFIX = /registry\/?$/;
@@ -322,10 +322,10 @@ export default class NpmRegistry extends Registry {
       const config = NpmRegistry.normalizeConfig(ini.parse(file));
 
       // normalize offline mirror path relative to the current npmrc
-      const offlineLoc = config['yarn-offline-mirror'];
+      const offlineLoc = config['spkgm-offline-mirror'];
       // don't normalize if we already have a mirror path
-      if (!this.config['yarn-offline-mirror'] && offlineLoc) {
-        const mirrorLoc = (config['yarn-offline-mirror'] = path.resolve(path.dirname(loc), offlineLoc));
+      if (!this.config['spkgm-offline-mirror'] && offlineLoc) {
+        const mirrorLoc = (config['spkgm-offline-mirror'] = path.resolve(path.dirname(loc), offlineLoc));
         await fs.mkdirp(mirrorLoc);
       }
 
@@ -350,7 +350,7 @@ export default class NpmRegistry extends Registry {
 
     for (const scope of [this.getScope(packageIdent), '']) {
       const registry =
-        this.getScopedOption(scope, 'registry') || this.registries.yarn.getScopedOption(scope, 'registry');
+        this.getScopedOption(scope, 'registry') || this.registries.spkgm.getScopedOption(scope, 'registry');
       if (registry) {
         return String(registry);
       }

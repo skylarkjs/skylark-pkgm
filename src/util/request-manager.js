@@ -17,7 +17,7 @@ import map from '../util/map.js';
 import typeof * as RequestModuleT from 'request';
 
 // Initialize DNS cache so we don't look up the same
-// domains like registry.yarnpkg.com over and over again
+// domains like registry.spkgmpkg.com over and over again
 // for each request.
 dnscache({
   enable: true,
@@ -479,7 +479,7 @@ export default class RequestManager {
       params.proxy = String(proxy);
     } else if (proxy === false) {
       // passing empty string prevents the underlying library from falling back to the env vars.
-      // an explicit false in the yarn config should override the env var. See #4546.
+      // an explicit false in the spkgm config should override the env var. See #4546.
       params.proxy = '';
     }
 

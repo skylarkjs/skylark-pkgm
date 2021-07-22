@@ -128,7 +128,7 @@ async function clean(config: Config, reporter: Reporter, flags: Object, args: Ar
 
 const {run, setFlags: _setFlags, examples} = buildSubCommands('cache', {
   async ls(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<void> {
-    reporter.warn(`\`yarn cache ls\` is deprecated. Please use \`yarn cache list\`.`);
+    reporter.warn(`\`spkgm cache ls\` is deprecated. Please use \`spkgm cache list\`.`);
     await list(config, reporter, flags, args);
   },
   list,

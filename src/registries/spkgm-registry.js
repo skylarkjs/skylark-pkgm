@@ -7,7 +7,7 @@ import {YARN_REGISTRY} from '../constants.js';
 import NpmRegistry from './npm-registry.js';
 import {stringify, parse} from '../lockfile';
 import * as fs from '../util/fs.js';
-import {version} from '../util/yarn-version.js';
+import {version} from '../util/spkgm-version.js';
 
 const userHome = require('../util/user-home-dir').default;
 const path = require('path');
@@ -28,11 +28,11 @@ export const DEFAULTS = {
   'ignore-optional': false,
   registry: YARN_REGISTRY,
   'strict-ssl': true,
-  'user-agent': [`yarn/${version}`, 'npm/?', `node/${process.version}`, process.platform, process.arch].join(' '),
+  'user-agent': [`spkgm/${version}`, 'npm/?', `node/${process.version}`, process.platform, process.arch].join(' '),
 };
 
-const RELATIVE_KEYS = ['yarn-offline-mirror', 'cache-folder', 'global-folder', 'offline-cache-folder', 'yarn-path'];
-const FOLDER_KEY = ['yarn-offline-mirror', 'cache-folder', 'global-folder', 'offline-cache-folder'];
+const RELATIVE_KEYS = ['spkgm-offline-mirror', 'cache-folder', 'global-folder', 'offline-cache-folder', 'spkgm-path'];
+const FOLDER_KEY = ['spkgm-offline-mirror', 'cache-folder', 'global-folder', 'offline-cache-folder'];
 
 const npmMap = {
   'version-git-sign': 'sign-git-tag',
@@ -53,11 +53,11 @@ export default class YarnRegistry extends NpmRegistry {
   ) {
     super(cwd, registries, requestManager, reporter, enableDefaultRc, extraneousRcFiles);
 
-    this.homeConfigLoc = path.join(userHome, '.yarnrc');
+    this.homeConfigLoc = path.join(userHome, '.spkgmrc');
     this.homeConfig = {};
   }
 
-  static filename = 'yarn.json';
+  static filename = 'spkgm.json';
 
   homeConfigLoc: string;
   homeConfig: Object;
@@ -65,7 +65,7 @@ export default class YarnRegistry extends NpmRegistry {
   getOption(key: string): mixed {
     let val = this.config[key];
 
-    // if this isn't set in a yarn config, then use npm
+    // if this isn't set in a spkgm config, then use npm
     if (typeof val === 'undefined') {
       val = this.registries.npm.getOption(npmMap[key]);
     }
@@ -74,7 +74,7 @@ export default class YarnRegistry extends NpmRegistry {
       val = this.registries.npm.getOption(key);
     }
 
-    // if this isn't set in a yarn config or npm config, then use the default (or undefined)
+    // if this isn't set in a spkgm config or npm config, then use the default (or undefined)
     if (typeof val === 'undefined') {
       val = DEFAULTS[key];
     }
@@ -83,7 +83,7 @@ export default class YarnRegistry extends NpmRegistry {
   }
 
   async loadConfig(): Promise<void> {
-    const locations = await this.getPossibleConfigLocations('yarnrc', this.reporter);
+    const locations = await this.getPossibleConfigLocations('spkgmrc', this.reporter);
 
     for (const [isHome, loc, file] of locations) {
       const {object: config} = parse(file, loc);
@@ -116,7 +116,7 @@ export default class YarnRegistry extends NpmRegistry {
       this.config = Object.assign({}, config, this.config);
     }
 
-    // default yarn config
+    // default spkgm config
     this.config = Object.assign({}, DEFAULTS, this.config);
   }
 

@@ -125,7 +125,7 @@ export default class NpmResolver extends RegistryResolver {
       // read package metadata
       const metadata = await this.config.readPackageMetadata(dir);
       if (!metadata.remote) {
-        continue; // old yarn metadata
+        continue; // old spkgm metadata
       }
 
       versions[pkg.version] = Object.assign({}, pkg, {

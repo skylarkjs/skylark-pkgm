@@ -3,4 +3,4 @@ function Get-ScriptDirectory {
 	Split-Path $Invocation.MyCommand.Path
 }
 
-node "$(Get-ScriptDirectory)/yarn.js" $args
+node "$(Get-ScriptDirectory)/spkgm.js" $args

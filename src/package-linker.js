@@ -365,11 +365,11 @@ export default class PackageLinker {
       }
     }
 
-    // If an Extraneous is an entry created via "yarn link", we prevent it from being overwritten.
+    // If an Extraneous is an entry created via "spkgm link", we prevent it from being overwritten.
     // Unfortunately, the only way we can know if they have been created this way is to check if they
     // are symlinks - problem is that it then conflicts with the newly introduced "link:" protocol,
     // which also creates symlinks :( a somewhat weak fix is to check if the symlink target is registered
-    // inside the linkFolder, in which case we assume it has been created via "yarn link". Otherwise, we
+    // inside the linkFolder, in which case we assume it has been created via "spkgm link". Otherwise, we
     // assume it's a link:-managed dependency, and overwrite it as usual.
     const linkTargets = new Map();
 

@@ -21,7 +21,7 @@ export function hasWrapper(commander: Object): boolean {
 }
 
 export function setFlags(commander: Object) {
-  commander.description('Verifies if versions in the current project’s package.json match that of yarn’s lock file.');
+  commander.description('Verifies if versions in the current project’s package.json match that of spkgm’s lock file.');
   commander.option('--integrity');
   commander.option('--verify-tree');
 }
@@ -38,7 +38,7 @@ export async function verifyTreeCheck(
     errCount++;
   }
   // check all dependencies recursively without relying on internal resolver
-  const registryName = 'yarn';
+  const registryName = 'spkgm';
   const registryFolder = config.registryFolders[0];
   const cwd = config.workspaceRootFolder ? config.lockfileFolder : config.cwd;
   const rootManifest = await config.readManifest(cwd, registryName);
@@ -171,7 +171,7 @@ async function integrityHashCheck(
   const lockfile = await Lockfile.fromDirectory(config.cwd);
   const install = new Install(flags, config, reporter, lockfile);
 
-  // get patterns that are installed when running `yarn install`
+  // get patterns that are installed when running `spkgm install`
   const {patterns, workspaceLayout} = await install.fetchRequestFromCwd();
 
   const match = await integrityChecker.check(patterns, lockfile.cache, flags, workspaceLayout);
@@ -226,7 +226,7 @@ export async function run(config: Config, reporter: Reporter, flags: Object, arg
     errCount++;
   }
 
-  // get patterns that are installed when running `yarn install`
+  // get patterns that are installed when running `spkgm install`
   const {patterns: rawPatterns, workspaceLayout} = await install.hydrate();
   const patterns = await install.flatten(rawPatterns);
 

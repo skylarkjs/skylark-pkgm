@@ -25,7 +25,7 @@ export type ParseResult = {
   object: Object,
 };
 
-const VERSION_REGEX = /^yarn lockfile v(\d+)$/;
+const VERSION_REGEX = /^spkgm lockfile v(\d+)$/;
 
 const TOKEN_TYPES = {
   boolean: 'BOOLEAN',
@@ -187,8 +187,8 @@ class Parser {
       const version = +versionMatch[1];
       if (version > LOCKFILE_VERSION) {
         throw new MessageError(
-          `Can't install from a lockfile of version ${version} as you're on an old yarn version that only supports ` +
-            `versions up to ${LOCKFILE_VERSION}. Run \`$ yarn self-update\` to upgrade to the latest version.`,
+          `Can't install from a lockfile of version ${version} as you're on an old spkgm version that only supports ` +
+            `versions up to ${LOCKFILE_VERSION}. Run \`$ spkgm self-update\` to upgrade to the latest version.`,
         );
       }
     }

@@ -57,9 +57,9 @@
 		<WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
 		<UIRef Id="WixUI_InstallDir" />
 
-		<WixVariable Id="WixUIBannerBmp" Value="yarn-banner.bmp" />
-		<WixVariable Id="WixUIDialogBmp" Value="yarn-dialog.bmp" />
-		<Icon Id="YarnIcon" SourceFile="yarn.ico" />
+		<WixVariable Id="WixUIBannerBmp" Value="spkgm-banner.bmp" />
+		<WixVariable Id="WixUIDialogBmp" Value="spkgm-dialog.bmp" />
+		<Icon Id="YarnIcon" SourceFile="spkgm.ico" />
 		<Property Id="ARPPRODUCTICON" Value="YarnIcon" />
 	</Product>
 </Wix>

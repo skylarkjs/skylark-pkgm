@@ -398,7 +398,7 @@ export class Import extends Install {
 
 export function setFlags(commander: Object) {
   commander.description(
-    'Generates yarn.lock from an npm package-lock.json file or an existing npm-installed node_modules folder.',
+    'Generates spkgm.lock from an npm package-lock.json file or an existing npm-installed node_modules folder.',
   );
 }
 

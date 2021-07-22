@@ -13,10 +13,10 @@ ensureAvailable lintian
 ensureAvailable rpmbuild
 
 PACKAGE_TMPDIR=tmp/debian_pkg
-VERSION=`./artifacts/yarn-legacy-* --version`
+VERSION=`./artifacts/spkgm-legacy-* --version`
 OUTPUT_DIR=artifacts
-TARBALL_NAME=$OUTPUT_DIR/yarn-v$VERSION.tar.gz
-DEB_PACKAGE_NAME=yarn_$VERSION'_all.deb'
+TARBALL_NAME=$OUTPUT_DIR/spkgm-v$VERSION.tar.gz
+DEB_PACKAGE_NAME=spkgm_$VERSION'_all.deb'
 
 if [ ! -e $TARBALL_NAME ]; then
   echo "Hey! Listen! You need to run build-dist.sh first."
@@ -34,33 +34,33 @@ umask 0022 # Ensure permissions are correct (0755 for dirs, 0644 for files)
 PACKAGE_TMPDIR_ABSOLUTE=$(readlink -f $PACKAGE_TMPDIR)
 
 # Create Linux package structure
-mkdir -p $PACKAGE_TMPDIR/usr/share/yarn/
-mkdir -p $PACKAGE_TMPDIR/usr/share/doc/yarn/
-tar zxf $TARBALL_NAME -C $PACKAGE_TMPDIR/usr/share/yarn/ --strip 1
-cp resources/debian/copyright $PACKAGE_TMPDIR/usr/share/doc/yarn/copyright
+mkdir -p $PACKAGE_TMPDIR/usr/share/spkgm/
+mkdir -p $PACKAGE_TMPDIR/usr/share/doc/spkgm/
+tar zxf $TARBALL_NAME -C $PACKAGE_TMPDIR/usr/share/spkgm/ --strip 1
+cp resources/debian/copyright $PACKAGE_TMPDIR/usr/share/doc/spkgm/copyright
 
 # The Yarn executable expects to be in the same directory as the libraries, so
 # we can't just copy it directly to /usr/bin. Symlink them instead.
 mkdir -p $PACKAGE_TMPDIR/usr/bin/
-ln -s ../share/yarn/bin/yarn $PACKAGE_TMPDIR/usr/bin/yarn
-# Alias as "yarnpkg" too.
-ln -s ../share/yarn/bin/yarn $PACKAGE_TMPDIR/usr/bin/yarnpkg
+ln -s ../share/spkgm/bin/spkgm $PACKAGE_TMPDIR/usr/bin/spkgm
+# Alias as "spkgmpkg" too.
+ln -s ../share/spkgm/bin/spkgm $PACKAGE_TMPDIR/usr/bin/spkgmpkg
 
 # Common FPM parameters for all packages we'll build using FPM
-FPM="fpm --input-type dir --chdir $PACKAGE_TMPDIR --name yarn --version $VERSION "`
-  `"--vendor 'Yarn Contributors <yarn@dan.cx>' --maintainer 'Yarn Contributors <yarn@dan.cx>' "`
-  `"--url https://yarnpkg.com/ --license BSD --description '$(cat resources/debian/description)'"
+FPM="fpm --input-type dir --chdir $PACKAGE_TMPDIR --name spkgm --version $VERSION "`
+  `"--vendor 'Yarn Contributors <spkgm@dan.cx>' --maintainer 'Yarn Contributors <spkgm@dan.cx>' "`
+  `"--url https://spkgmpkg.com/ --license BSD --description '$(cat resources/debian/description)'"
 
 ##### Build RPM (CentOS, Fedora) package
-./scripts/update-dist-manifest.js $PACKAGE_TMPDIR_ABSOLUTE/usr/share/yarn/package.json rpm
+./scripts/update-dist-manifest.js $PACKAGE_TMPDIR_ABSOLUTE/usr/share/spkgm/package.json rpm
 eval "$FPM --output-type rpm  --architecture noarch --depends nodejs --category 'Development/Languages' ."
 mv *.rpm $OUTPUT_DIR
 
 ##### Build DEB (Debian, Ubuntu) package
-./scripts/update-dist-manifest.js $PACKAGE_TMPDIR_ABSOLUTE/usr/share/yarn/package.json deb
+./scripts/update-dist-manifest.js $PACKAGE_TMPDIR_ABSOLUTE/usr/share/spkgm/package.json deb
 mkdir -p $PACKAGE_TMPDIR/DEBIAN
 mkdir -p $PACKAGE_TMPDIR/usr/share/lintian/overrides/
-cp resources/debian/lintian-overrides $PACKAGE_TMPDIR/usr/share/lintian/overrides/yarn
+cp resources/debian/lintian-overrides $PACKAGE_TMPDIR/usr/share/lintian/overrides/spkgm
 
 # Replace variables in Debian package control file
 INSTALLED_SIZE=`du -sk $PACKAGE_TMPDIR | cut -f 1`

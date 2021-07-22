@@ -2,7 +2,7 @@
 
 import map from './map.js';
 
-const debug = require('debug')('yarn');
+const debug = require('debug')('spkgm');
 
 export default class BlockingQueue {
   constructor(alias: string, maxConcurrency?: number = Infinity) {

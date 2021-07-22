@@ -122,7 +122,7 @@ export default class BaseRegistry {
   }
 
   async init(overrides: Object = {}): Promise<void> {
-    this.mergeEnv('yarn_');
+    this.mergeEnv('spkgm_');
     await this.loadConfig();
 
     for (const override of Object.keys(overrides)) {

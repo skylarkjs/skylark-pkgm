@@ -38,7 +38,7 @@ function getRcPaths(name: string, cwd: string): Array<string> {
     pushConfigPath(home, `.${name}rc`);
   }
 
-  // add .yarnrc locations relative to the cwd
+  // add .spkgmrc locations relative to the cwd
   while (true) {
     unshiftConfigPath(cwd, `.${name}rc`);
 

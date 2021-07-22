@@ -120,7 +120,7 @@ export default class PackageRequest {
     try {
       return await resolver.resolve();
     } catch (err) {
-      // if it is not an error thrown by yarn and it has a parent request,
+      // if it is not an error thrown by spkgm and it has a parent request,
       // thow a more readable error
       if (!(err instanceof MessageError) && this.parentRequest && this.parentRequest.pattern) {
         throw new MessageError(

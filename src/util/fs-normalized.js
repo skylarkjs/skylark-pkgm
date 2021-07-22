@@ -91,7 +91,7 @@ const copyWithBuffer: (src: string, dest: string, flags: number, data: CopyFileA
   }
 };
 
-// We want to preserve file timestamps when copying a file, since yarn uses them to decide if a file has
+// We want to preserve file timestamps when copying a file, since spkgm uses them to decide if a file has
 // changed compared to the cache.
 // There are some OS specific cases here:
 // * On linux, fs.copyFile does not preserve timestamps, but does on OSX and Win.
@@ -133,7 +133,7 @@ async function fixTimes(fd: ?number, dest: string, data: CopyFileAction): Promis
   } catch (er) {
     // If `futimes` throws an exception, we probably have a case of a read-only file on Windows.
     // In this case we can just return. The incorrect timestamp will just cause that file to be recopied
-    // on subsequent installs, which will effect yarn performance but not break anything.
+    // on subsequent installs, which will effect spkgm performance but not break anything.
   } finally {
     if (doOpen && openfd) {
       await close(openfd);

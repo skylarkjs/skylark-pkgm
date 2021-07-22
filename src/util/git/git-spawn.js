@@ -20,7 +20,7 @@ const sshBatchArgs = BATCH_MODE_ARGS.get(sshExecutable);
 if (!env.GIT_SSH_COMMAND && sshBatchArgs) {
   // We have to manually specify `GIT_SSH_VARIANT`,
   // because it's not automatically set when using `GIT_SSH_COMMAND` instead of `GIT_SSH`
-  // See: https://github.com/yarnpkg/yarn/issues/4729
+  // See: https://github.com/spkgmpkg/spkgm/issues/4729
   env.GIT_SSH_VARIANT = sshExecutable;
   env.GIT_SSH_COMMAND = `"${sshCommand}" ${sshBatchArgs}`;
 }

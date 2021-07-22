@@ -5,11 +5,11 @@
   },
   "plugins": [
     "flowtype",
-    "yarn-internal",
+    "spkgm-internal",
     "prettier"
   ],
   "rules": {
-    "yarn-internal/warn-language": "error",
+    "spkgm-internal/warn-language": "error",
     "max-len": ["error", 120],
     "prefer-arrow-callback": "off",
     "flowtype/require-valid-file-annotation": ["error", "always"],

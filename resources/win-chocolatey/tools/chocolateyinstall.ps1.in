@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'; # stop on all errors
 
-$packageName = 'yarn'
+$packageName = 'spkgm'
 
 $packageArgs = @{
   packageName = $packageName
@@ -10,7 +10,7 @@ $packageArgs = @{
   validExitCodes = @(0, 3010, 1641)
   checksumType = 'sha256'
 
-  url = 'https://yarnpkg.com/downloads/{VERSION}/yarn-{VERSION}.msi'
+  url = 'https://spkgmpkg.com/downloads/{VERSION}/spkgm-{VERSION}.msi'
   checksum = '{CHECKSUM}'
 }
 

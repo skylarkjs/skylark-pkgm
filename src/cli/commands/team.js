@@ -44,7 +44,7 @@ function explodeScopeTeam(arg: string, requireTeam: boolean, reporter: Reporter)
 }
 
 function warnDeprecation(reporter: Reporter, deprecationWarning: DeprecationWarning) {
-  const command = 'yarn team';
+  const command = 'spkgm team';
   reporter.warn(
     reporter.lang(
       'deprecatedCommand',

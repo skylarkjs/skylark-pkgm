@@ -20,8 +20,8 @@ module.exports = (makeTemporaryEnv: PackageDriver) => {
 
     test(
       `it should run scripts using the same package manager than the one running the scripts`,
-      makeTemporaryEnv({scripts: {myScript: `yarn --version`}}, async ({path, run, source}) => {
-        await makeFakeBinary(`${path}/bin/yarn`, {exitCode: 1});
+      makeTemporaryEnv({scripts: {myScript: `spkgm --version`}}, async ({path, run, source}) => {
+        await makeFakeBinary(`${path}/bin/spkgm`, {exitCode: 1});
 
         await expect(run(`run`, `myScript`)).resolves.toBeTruthy();
       }),

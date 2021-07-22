@@ -574,7 +574,7 @@ export default class PackageResolver {
     const patterns: Array<string> = this.dedupePatterns(this.patternsByPackage[name] || []);
 
     // don't optimize things that already have a lockfile entry:
-    // https://github.com/yarnpkg/yarn/issues/79
+    // https://github.com/spkgmpkg/spkgm/issues/79
     const collapsablePatterns = patterns.filter(pattern => {
       const remote = this.patterns[pattern]._remote;
       return !this.lockfile.getLocked(pattern) && (!remote || remote.type !== 'workspace');

@@ -16,9 +16,9 @@ const emoji = require('node-emoji');
 export const requireLockfile = true;
 
 export function setFlags(commander: Object) {
-  commander.description('Removes a package from your direct dependencies updating your package.json and yarn.lock.');
+  commander.description('Removes a package from your direct dependencies updating your package.json and spkgm.lock.');
   commander.usage('remove [packages ...] [flags]');
-  commander.option('-W, --ignore-workspace-root-check', 'required to run yarn remove inside a workspace root');
+  commander.option('-W, --ignore-workspace-root-check', 'required to run spkgm remove inside a workspace root');
 }
 
 export function hasWrapper(commander: Object, args: Array<string>): boolean {
@@ -32,7 +32,7 @@ export async function run(config: Config, reporter: Reporter, flags: Object, arg
     throw new MessageError(reporter.lang('tooFewArguments', 1));
   }
 
-  // running "yarn remove something" in a workspace root is often a mistake
+  // running "spkgm remove something" in a workspace root is often a mistake
   if (isWorkspaceRoot && !flags.ignoreWorkspaceRootCheck) {
     throw new MessageError(reporter.lang('workspacesRemoveRootCheck'));
   }

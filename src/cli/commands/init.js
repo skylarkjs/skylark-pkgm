@@ -32,7 +32,7 @@ export async function run(config: Config, reporter: Reporter, flags: Object, arg
   const installVersion = flags[`2`] ? `berry` : flags.install;
 
   if (installVersion) {
-    const lockfilePath = path.resolve(config.cwd, 'yarn.lock');
+    const lockfilePath = path.resolve(config.cwd, 'spkgm.lock');
     if (!await fs.exists(lockfilePath)) {
       await fs.writeFile(lockfilePath, '');
     }

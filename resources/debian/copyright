@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Yarn
-Upstream-Contact: Yarn Developers <yarn@dan.cx>
-Source: http://yarnpkg.com/
+Upstream-Contact: Yarn Developers <spkgm@dan.cx>
+Source: http://spkgmpkg.com/
 
 Files: *
 Copyright: 2016-present, Yarn Contributors

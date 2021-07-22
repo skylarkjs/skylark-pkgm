@@ -23,13 +23,13 @@ export function run(config: Config, reporter: Reporter, commander: Object, args:
       const command = commands[commandName];
       if (command) {
         command.setFlags(commander);
-        const examples: Array<string> = (command.examples || []).map(example => `    $ yarn ${example}`);
+        const examples: Array<string> = (command.examples || []).map(example => `    $ spkgm ${example}`);
         if (examples.length) {
           commander.on('--help', () => {
             reporter.log(reporter.lang('helpExamples', reporter.rawText(examples.join('\n'))));
           });
         }
-        // eslint-disable-next-line yarn-internal/warn-language
+        // eslint-disable-next-line spkgm-internal/warn-language
         commander.on('--help', () => reporter.log('  ' + command.getDocsInfo + '\n'));
         commander.help();
         return Promise.resolve();
@@ -50,7 +50,7 @@ export function run(config: Config, reporter: Reporter, commander: Object, args:
       }
     }
     reporter.log(reporter.lang('helpCommands', reporter.rawText(commandsText.join('\n'))));
-    reporter.log(reporter.lang('helpCommandsMore', reporter.rawText(chalk.bold('yarn help COMMAND'))));
+    reporter.log(reporter.lang('helpCommandsMore', reporter.rawText(chalk.bold('spkgm help COMMAND'))));
     reporter.log(reporter.lang('helpLearnMore', reporter.rawText(chalk.bold(constants.YARN_DOCS))));
   });
 

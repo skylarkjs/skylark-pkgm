@@ -96,7 +96,7 @@ export default class GitFetcher extends BaseFetcher {
           const actualHash = hashStream.getHash();
 
           // This condition is disabled because "expectHash" actually is the commit hash
-          // This is a design issue that we'll need to fix (https://github.com/yarnpkg/yarn/pull/3449)
+          // This is a design issue that we'll need to fix (https://github.com/spkgmpkg/spkgm/pull/3449)
           if (true || !expectHash || expectHash === actualHash) {
             resolve({
               hash: expectHash,

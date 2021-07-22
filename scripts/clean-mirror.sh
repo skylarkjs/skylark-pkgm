@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# This script finds all packages located inside an offline mirror, all packages referenced by yarn.lock files, and remove those which aren't referenced anymore.
-# The first argument is the directory where your offline mirror lives, and the second one is the location where the script should recursively start looking for yarn.lock files.
-# If you only have a single project in your mirror, you can use the purge configuration to automatically remove packages from it as they are dereferenced (`yarn config set yarn-offline-mirror-pruning true`).
+# This script finds all packages located inside an offline mirror, all packages referenced by spkgm.lock files, and remove those which aren't referenced anymore.
+# The first argument is the directory where your offline mirror lives, and the second one is the location where the script should recursively start looking for spkgm.lock files.
+# If you only have a single project in your mirror, you can use the purge configuration to automatically remove packages from it as they are dereferenced (`spkgm config set spkgm-offline-mirror-pruning true`).
 
 set -e
 
@@ -29,8 +29,8 @@ trap "rm -rf $TEMP" EXIT
 MIRROR="$1"
 SOURCES="$2"
 
-# Find all yarn.lock files in the source directory
-find "${SOURCES}" -type f -name yarn.lock > "${TEMP}.ylocks"
+# Find all spkgm.lock files in the source directory
+find "${SOURCES}" -type f -name spkgm.lock > "${TEMP}.ylocks"
 
 # Extract the part right before the hash, and remove duplicates
 xargs cat < "${TEMP}.ylocks" | grep -E '^[ \t]*resolved[ \t]+' | perl -pe 's/^(?:[^\/ \n]*[\/ ])*([^#]*)#.*$/\1/gm' | sort | uniq > "${TEMP}.deps"

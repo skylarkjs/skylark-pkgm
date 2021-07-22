@@ -91,7 +91,7 @@ export default class InstallationIntegrityChecker {
   }
 
   /**
-   * Get the directory in which the yarn-integrity file should be written.
+   * Get the directory in which the spkgm-integrity file should be written.
    */
 
   _getIntegrityFileFolder(): string {
@@ -105,7 +105,7 @@ export default class InstallationIntegrityChecker {
   }
 
   /**
-   * Get the full path of the yarn-integrity file.
+   * Get the full path of the spkgm-integrity file.
    */
 
   async _getIntegrityFileLocation(): Promise<IntegrityHashLocation> {
@@ -197,7 +197,7 @@ export default class InstallationIntegrityChecker {
     // dependency is added or removed into one of them. We must take care not to read the aggregator (if !loc).
     //
     // Also note that we can't use of workspaceLayout.workspaces[].manifest._reference.patterns, because when
-    // doing a "yarn check", the _reference property hasn't yet been properly initialized.
+    // doing a "spkgm check", the _reference property hasn't yet been properly initialized.
 
     if (workspaceLayout) {
       result.topLevelPatterns = result.topLevelPatterns.filter(p => {
@@ -313,7 +313,7 @@ export default class InstallationIntegrityChecker {
 
     let relevantExpectedFlags = expected.flags.slice();
 
-    // If we run "yarn" after "yarn --check-files", we shouldn't fail the less strict validation
+    // If we run "spkgm" after "spkgm --check-files", we shouldn't fail the less strict validation
     if (actual.flags.indexOf('checkFiles') === -1) {
       relevantExpectedFlags = relevantExpectedFlags.filter(flag => flag !== 'checkFiles');
     }

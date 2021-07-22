@@ -1441,7 +1441,7 @@ module.exports = makeTemporaryEnv => {
             [`resolve`]: `https://github.com/browserify/resolve.git`,
           },
           resolutions: {
-            [`path-parse`]: `https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz`,
+            [`path-parse`]: `https://registry.spkgmpkg.com/path-parse/-/path-parse-1.0.6.tgz`,
           },
         },
         {plugNPlay: true},

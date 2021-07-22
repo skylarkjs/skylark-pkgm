@@ -45,7 +45,7 @@ export function hasWrapper(flags: Object, args: Array<string>): boolean {
 }
 
 export function setFlags(commander: Object) {
-  commander.description('Manages the yarn configuration files.');
+  commander.description('Manages the spkgm configuration files.');
 }
 
 export const {run, examples} = buildSubCommands('config', {
@@ -54,8 +54,8 @@ export const {run, examples} = buildSubCommands('config', {
       return false;
     }
     const [key, val = true] = args;
-    const yarnConfig = config.registries.yarn;
-    await yarnConfig.saveHomeConfig({[key]: val});
+    const spkgmConfig = config.registries.spkgm;
+    await spkgmConfig.saveHomeConfig({[key]: val});
     reporter.success(reporter.lang('configSet', key, val));
     return true;
   },
@@ -75,8 +75,8 @@ export const {run, examples} = buildSubCommands('config', {
     }
 
     const key = args[0];
-    const yarnConfig = config.registries.yarn;
-    await yarnConfig.saveHomeConfig({[key]: undefined});
+    const spkgmConfig = config.registries.spkgm;
+    await spkgmConfig.saveHomeConfig({[key]: undefined});
     reporter.success(reporter.lang('configDelete', key));
     return true;
   },
@@ -87,7 +87,7 @@ export const {run, examples} = buildSubCommands('config', {
     }
 
     reporter.info(reporter.lang('configYarn'));
-    reporter.inspect(config.registries.yarn.config);
+    reporter.inspect(config.registries.spkgm.config);
 
     reporter.info(reporter.lang('configNpm'));
     reporter.inspect(config.registries.npm.config);

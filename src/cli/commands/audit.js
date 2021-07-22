@@ -322,14 +322,14 @@ export default class Audit {
         action.resolves.forEach(reportAdvisory);
 
         /* The following block has been temporarily removed
-         * because the actions returned by npm are not valid for yarn.
+         * because the actions returned by npm are not valid for spkgm.
          * Removing this action reporting until we can come up with a way
          * to correctly resolve issues.
          */
         // if (action.action === 'update' || action.action === 'install') {
-        //   // these advisories can be resolved automatically by running a yarn command
+        //   // these advisories can be resolved automatically by running a spkgm command
         //   const recommendation: AuditActionRecommendation = {
-        //     cmd: `yarn upgrade ${action.module}@${action.target}`,
+        //     cmd: `spkgm upgrade ${action.module}@${action.target}`,
         //     isBreaking: action.isMajor,
         //     action,
         //   };

@@ -1,7 +1,7 @@
 /* @flow */
 
 import objectPath from 'object-path';
-import type {InstallationMethod} from '../../util/yarn-version.js';
+import type {InstallationMethod} from '../../util/spkgm-version.js';
 import type {Reporter} from '../../reporters/index.js';
 import type {ReporterSelectOption} from '../../reporters/types.js';
 import type {Manifest, DependencyRequestPatterns} from '../../types.js';
@@ -26,7 +26,7 @@ import * as constants from '../../constants.js';
 import {normalizePattern} from '../../util/normalize-pattern.js';
 import * as fs from '../../util/fs.js';
 import map from '../../util/map.js';
-import {version as YARN_VERSION, getInstallationMethod} from '../../util/yarn-version.js';
+import {version as YARN_VERSION, getInstallationMethod} from '../../util/spkgm-version.js';
 import {generatePnpMap} from '../../util/generate-pnp-map.js';
 import WorkspaceLayout from '../../workspace-layout.js';
 import ResolutionMap from '../../resolution-map.js';
@@ -93,31 +93,31 @@ function getUpdateCommand(installationMethod: InstallationMethod): ?string {
   }
 
   if (installationMethod === 'homebrew') {
-    return 'brew upgrade yarn';
+    return 'brew upgrade spkgm';
   }
 
   if (installationMethod === 'deb') {
-    return 'sudo apt-get update && sudo apt-get install yarn';
+    return 'sudo apt-get update && sudo apt-get install spkgm';
   }
 
   if (installationMethod === 'rpm') {
-    return 'sudo yum install yarn';
+    return 'sudo yum install spkgm';
   }
 
   if (installationMethod === 'npm') {
-    return 'npm install --global yarn';
+    return 'npm install --global spkgm';
   }
 
   if (installationMethod === 'chocolatey') {
-    return 'choco upgrade yarn';
+    return 'choco upgrade spkgm';
   }
 
   if (installationMethod === 'apk') {
-    return 'apk update && apk add -u yarn';
+    return 'apk update && apk add -u spkgm';
   }
 
   if (installationMethod === 'portage') {
-    return 'sudo emerge --sync && sudo emerge -au sys-apps/yarn';
+    return 'sudo emerge --sync && sudo emerge -au sys-apps/spkgm';
   }
 
   return null;
@@ -707,7 +707,7 @@ export class Install {
     if (this.flags.har) {
       steps.push(async (curr: number, total: number) => {
         const formattedDate = new Date().toISOString().replace(/:/g, '-');
-        const filename = `yarn-install_${formattedDate}.har`;
+        const filename = `spkgm-install_${formattedDate}.har`;
         this.reporter.step(
           curr,
           total,
@@ -1102,23 +1102,23 @@ export class Install {
     }
 
     // ensure we only check for updates periodically
-    this.config.registries.yarn.saveHomeConfig({
+    this.config.registries.spkgm.saveHomeConfig({
       lastUpdateCheck: Date.now(),
     });
 
     if (semver.gt(latestVersion, YARN_VERSION)) {
       const installationMethod = await getInstallationMethod();
       this.maybeOutputUpdate = () => {
-        this.reporter.warn(this.reporter.lang('yarnOutdated', latestVersion, YARN_VERSION));
+        this.reporter.warn(this.reporter.lang('spkgmOutdated', latestVersion, YARN_VERSION));
 
         const command = getUpdateCommand(installationMethod);
         if (command) {
-          this.reporter.info(this.reporter.lang('yarnOutdatedCommand'));
+          this.reporter.info(this.reporter.lang('spkgmOutdatedCommand'));
           this.reporter.command(command);
         } else {
           const installer = getUpdateInstaller(installationMethod);
           if (installer) {
-            this.reporter.info(this.reporter.lang('yarnOutdatedInstaller', installer));
+            this.reporter.info(this.reporter.lang('spkgmOutdatedInstaller', installer));
           }
         }
       };
@@ -1189,7 +1189,7 @@ export async function run(config: Config, reporter: Reporter, flags: Object, arg
       error = 'globalFlagRemoved';
       command = 'global add';
     }
-    throw new MessageError(reporter.lang(error, `yarn ${command} ${exampleArgs.join(' ')}`));
+    throw new MessageError(reporter.lang(error, `spkgm ${command} ${exampleArgs.join(' ')}`));
   }
 
   await install(config, reporter, flags, lockfile);

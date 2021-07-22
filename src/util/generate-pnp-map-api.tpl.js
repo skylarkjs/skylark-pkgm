@@ -335,7 +335,7 @@ exports.resolveToUnqualified = function resolveToUnqualified(request, issuer, {c
   }
 
   // We allow disabling the pnp resolution for some subpaths. This is because some projects, often legacy,
-  // contain multiple levels of dependencies (ie. a yarn.lock inside a subfolder of a yarn.lock). This is
+  // contain multiple levels of dependencies (ie. a spkgm.lock inside a subfolder of a spkgm.lock). This is
   // typically solved using workspaces, but not all of them have been converted already.
 
   if (ignorePattern && ignorePattern.test(normalizePath(issuer))) {

@@ -123,7 +123,7 @@ export function setFlags(commander: Object) {
 }
 export const {run, examples} = buildSubCommands('licenses', {
   async ls(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<void> {
-    reporter.warn(`\`yarn licenses ls\` is deprecated. Please use \`yarn licenses list\`.`);
+    reporter.warn(`\`spkgm licenses ls\` is deprecated. Please use \`spkgm licenses list\`.`);
     await list(config, reporter, flags, args);
   },
 

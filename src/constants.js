@@ -18,14 +18,14 @@ export const MANIFEST_FIELDS = [RESOLUTIONS, ...DEPENDENCY_TYPES];
 
 export const SUPPORTED_NODE_VERSIONS = '^4.8.0 || ^5.7.0 || ^6.2.2 || >=8.0.0';
 
-export const YARN_REGISTRY = 'https://registry.yarnpkg.com';
+export const YARN_REGISTRY = 'https://registry.spkgmpkg.com';
 export const NPM_REGISTRY_RE = /https?:\/\/registry\.npmjs\.org/g;
 
-export const YARN_DOCS = 'https://yarnpkg.com/en/docs/cli/';
-export const YARN_INSTALLER_SH = 'https://yarnpkg.com/install.sh';
-export const YARN_INSTALLER_MSI = 'https://yarnpkg.com/latest.msi';
+export const YARN_DOCS = 'https://spkgmpkg.com/en/docs/cli/';
+export const YARN_INSTALLER_SH = 'https://spkgmpkg.com/install.sh';
+export const YARN_INSTALLER_MSI = 'https://spkgmpkg.com/latest.msi';
 
-export const SELF_UPDATE_VERSION_URL = 'https://yarnpkg.com/latest-version';
+export const SELF_UPDATE_VERSION_URL = 'https://spkgmpkg.com/latest-version';
 
 // cache version, bump whenever we make backwards incompatible changes
 export const CACHE_VERSION = 6;
@@ -49,10 +49,10 @@ function getPreferredCacheDirectories(): Array<string> {
 
   if (process.getuid) {
     // $FlowFixMe: process.getuid exists, dammit
-    preferredCacheDirectories.push(path.join(os.tmpdir(), `.yarn-cache-${process.getuid()}`));
+    preferredCacheDirectories.push(path.join(os.tmpdir(), `.spkgm-cache-${process.getuid()}`));
   }
 
-  preferredCacheDirectories.push(path.join(os.tmpdir(), `.yarn-cache`));
+  preferredCacheDirectories.push(path.join(os.tmpdir(), `.spkgm-cache`));
 
   return preferredCacheDirectories;
 }
@@ -71,7 +71,7 @@ function getYarnBinPath(): string {
   if (isWebpackBundle) {
     return __filename;
   } else {
-    return path.join(__dirname, '..', 'bin', 'yarn.js');
+    return path.join(__dirname, '..', 'bin', 'spkgm.js');
   }
 }
 
@@ -81,21 +81,21 @@ export const NODE_PACKAGE_JSON = 'package.json';
 export const PNP_FILENAME = '.pnp.js';
 
 export const POSIX_GLOBAL_PREFIX = `${process.env.DESTDIR || ''}/usr/local`;
-export const FALLBACK_GLOBAL_PREFIX = path.join(userHome, '.yarn');
+export const FALLBACK_GLOBAL_PREFIX = path.join(userHome, '.spkgm');
 
-export const META_FOLDER = '.yarn-meta';
-export const INTEGRITY_FILENAME = '.yarn-integrity';
-export const LOCKFILE_FILENAME = 'yarn.lock';
-export const METADATA_FILENAME = '.yarn-metadata.json';
-export const TARBALL_FILENAME = '.yarn-tarball.tgz';
-export const CLEAN_FILENAME = '.yarnclean';
+export const META_FOLDER = '.spkgm-meta';
+export const INTEGRITY_FILENAME = '.spkgm-integrity';
+export const LOCKFILE_FILENAME = 'spkgm.lock';
+export const METADATA_FILENAME = '.spkgm-metadata.json';
+export const TARBALL_FILENAME = '.spkgm-tarball.tgz';
+export const CLEAN_FILENAME = '.spkgmclean';
 
 export const NPM_LOCK_FILENAME = 'package-lock.json';
 export const NPM_SHRINKWRAP_FILENAME = 'npm-shrinkwrap.json';
 
 export const DEFAULT_INDENT = '  ';
 export const SINGLE_INSTANCE_PORT = 31997;
-export const SINGLE_INSTANCE_FILENAME = '.yarn-single-instance';
+export const SINGLE_INSTANCE_FILENAME = '.spkgm-single-instance';
 
 export const ENV_PATH_KEY = getPathKey(process.platform, process.env);
 

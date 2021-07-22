@@ -138,7 +138,7 @@ export default class Lockfile {
 
   parseResultType: ?ParseResultType;
 
-  // if true, we're parsing an old yarn file and need to update integrity fields
+  // if true, we're parsing an old spkgm file and need to update integrity fields
   hasEntriesExistWithoutIntegrity(): boolean {
     if (!this.cache) {
       return false;

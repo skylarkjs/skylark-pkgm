@@ -21,7 +21,7 @@ import {MessageError} from '../errors.js';
 import Config from '../config.js';
 import {getRcConfigForCwd, getRcArgs} from '../rc.js';
 import {spawnp, forkp} from '../util/child.js';
-import {version} from '../util/yarn-version.js';
+import {version} from '../util/spkgm-version.js';
 import handleSignals from '../util/signal-handler.js';
 import {boolify, boolifyWithDefault} from '../util/conversion.js';
 import {ProcessTermError} from '../errors';
@@ -70,10 +70,10 @@ export async function main({
   // set global options
   commander.version(version, '-v, --version');
   commander.usage('[command] [flags]');
-  commander.option('--no-default-rc', 'prevent Yarn from automatically detecting yarnrc and npmrc files');
+  commander.option('--no-default-rc', 'prevent Yarn from automatically detecting spkgmrc and npmrc files');
   commander.option(
-    '--use-yarnrc <path>',
-    'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc)',
+    '--use-spkgmrc <path>',
+    'specifies a spkgmrc file that Yarn should use (.spkgmrc only, not .npmrc)',
     collect,
     [],
   );
@@ -106,9 +106,9 @@ export async function main({
     '--modules-folder <path>',
     'rather than installing modules into the node_modules folder relative to the cwd, output them here',
   );
-  commander.option('--preferred-cache-folder <path>', 'specify a custom folder to store the yarn cache if possible');
-  commander.option('--cache-folder <path>', 'specify a custom folder that must be used to store the yarn cache');
-  commander.option('--mutex <type>[:specifier]', 'use a mutex to ensure only one yarn instance is executing');
+  commander.option('--preferred-cache-folder <path>', 'specify a custom folder to store the spkgm cache if possible');
+  commander.option('--cache-folder <path>', 'specify a custom folder that must be used to store the spkgm cache');
+  commander.option('--mutex <type>[:specifier]', 'use a mutex to ensure only one spkgm instance is executing');
   commander.option(
     '--emoji [bool]',
     'enable emoji in output',
@@ -200,16 +200,16 @@ export async function main({
   const command = commands[commandName];
 
   let warnAboutRunDashDash = false;
-  // we are using "yarn <script> -abc", "yarn run <script> -abc", or "yarn node -abc", we want -abc
-  // to be script options, not yarn options
+  // we are using "spkgm <script> -abc", "spkgm run <script> -abc", or "spkgm node -abc", we want -abc
+  // to be script options, not spkgm options
 
   // PROXY_COMMANDS is a map of command name to the number of preservedArgs
   const PROXY_COMMANDS = {
-    run: 1, // yarn run {command}
-    create: 1, // yarn create {project}
-    node: 0, // yarn node
-    workspaces: 1, // yarn workspaces {command}
-    workspace: 2, // yarn workspace {package} {command}
+    run: 1, // spkgm run {command}
+    create: 1, // spkgm create {project}
+    node: 0, // spkgm node
+    workspaces: 1, // spkgm workspaces {command}
+    workspace: 2, // spkgm workspace {package} {command}
   };
   if (PROXY_COMMANDS.hasOwnProperty(commandName)) {
     if (endArgs.length === 0) {
@@ -271,7 +271,7 @@ export async function main({
     !(commandName === 'init' && commander[`2`]);
 
   if (shouldWrapOutput) {
-    reporter.header(commandName, {name: 'yarn', version});
+    reporter.header(commandName, {name: 'spkgm', version});
   }
 
   if (commander.nodeVersionCheck && !semver.satisfies(process.versions.node, constants.SUPPORTED_NODE_VERSIONS)) {
@@ -506,8 +506,8 @@ export async function main({
 
   function writeErrorReport(log): ?string {
     const errorReportLoc = config.enableMetaFolder
-      ? path.join(config.cwd, constants.META_FOLDER, 'yarn-error.log')
-      : path.join(config.cwd, 'yarn-error.log');
+      ? path.join(config.cwd, constants.META_FOLDER, 'spkgm-error.log')
+      : path.join(config.cwd, 'spkgm-error.log');
 
     try {
       fs.writeFileSync(errorReportLoc, log.join('\n\n') + '\n');
@@ -565,8 +565,8 @@ export async function main({
         throw new MessageError(reporter.lang('noRequiredLockfile'));
       }
 
-      // option "no-progress" stored in yarn config
-      const noProgressConfig = config.registries.yarn.getOption('no-progress');
+      // option "no-progress" stored in spkgm config
+      const noProgressConfig = config.registries.spkgm.getOption('no-progress');
 
       if (noProgressConfig) {
         reporter.disableProgress();
@@ -626,9 +626,9 @@ export async function main({
 
 async function start(): Promise<void> {
   const rc = getRcConfigForCwd(process.cwd(), process.argv.slice(2));
-  const yarnPath = rc['yarn-path'] || rc['yarnPath'];
+  const spkgmPath = rc['spkgm-path'] || rc['spkgmPath'];
 
-  if (yarnPath && !boolifyWithDefault(process.env.YARN_IGNORE_PATH, false)) {
+  if (spkgmPath && !boolifyWithDefault(process.env.YARN_IGNORE_PATH, false)) {
     const argv = process.argv.slice(2);
     const opts = {stdio: 'inherit', env: Object.assign({}, process.env, {YARN_IGNORE_PATH: 1})};
     let exitCode = 0;
@@ -639,14 +639,14 @@ async function start(): Promise<void> {
     });
 
     try {
-      if (/\.[cm]?js$/.test(yarnPath)) {
-        exitCode = await spawnp(process.execPath, [yarnPath, ...argv], opts);
+      if (/\.[cm]?js$/.test(spkgmPath)) {
+        exitCode = await spawnp(process.execPath, [spkgmPath, ...argv], opts);
       } else {
-        exitCode = await spawnp(yarnPath, argv, opts);
+        exitCode = await spawnp(spkgmPath, argv, opts);
       }
     } catch (firstError) {
       try {
-        exitCode = await forkp(yarnPath, argv, opts);
+        exitCode = await forkp(spkgmPath, argv, opts);
       } catch (error) {
         throw firstError;
       }

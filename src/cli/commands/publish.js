@@ -66,7 +66,7 @@ async function publish(config: Config, pkg: any, flags: Object, dir: string): Pr
 
   await config.executeLifecycleScript('postpack');
 
-  // copy normalized package and remove internal keys as they may be sensitive or yarn specific
+  // copy normalized package and remove internal keys as they may be sensitive or spkgm specific
   pkg = Object.assign({}, pkg);
   for (const key in pkg) {
     if (key[0] === '_') {

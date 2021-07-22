@@ -11,7 +11,7 @@ async function getCredentials(
   username: string,
   email: string,
 }> {
-  let {username, email} = config.registries.yarn.config;
+  let {username, email} = config.registries.spkgm.config;
 
   if (username) {
     reporter.info(`${reporter.lang('npmUsername')}: ${username}`);
@@ -31,7 +31,7 @@ async function getCredentials(
     }
   }
 
-  await config.registries.yarn.saveHomeConfig({username, email});
+  await config.registries.spkgm.saveHomeConfig({username, email});
 
   return {username, email};
 }

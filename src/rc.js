@@ -10,7 +10,7 @@ import * as rcUtil from './util/rc.js';
 
 // Keys that will get resolved relative to the path of the rc file they belong to
 const PATH_KEYS = new Set([
-  'yarn-path',
+  'spkgm-path',
   'cache-folder',
   'global-folder',
   'modules-folder',
@@ -18,20 +18,20 @@ const PATH_KEYS = new Set([
   'offline-cache-folder',
 ]);
 
-// given a cwd, load all .yarnrc files relative to it
+// given a cwd, load all .spkgmrc files relative to it
 export function getRcConfigForCwd(cwd: string, args: Array<string>): {[key: string]: string} {
   const config = {};
 
   if (args.indexOf('--no-default-rc') === -1) {
     Object.assign(
       config,
-      rcUtil.findRc('yarn', cwd, (fileText, filePath) => {
+      rcUtil.findRc('spkgm', cwd, (fileText, filePath) => {
         return loadRcFile(fileText, filePath);
       }),
     );
   }
 
-  for (let index = args.indexOf('--use-yarnrc'); index !== -1; index = args.indexOf('--use-yarnrc', index + 1)) {
+  for (let index = args.indexOf('--use-spkgmrc'); index !== -1; index = args.indexOf('--use-spkgmrc', index + 1)) {
     const value = args[index + 1];
 
     if (value && value.charAt(0) !== '-') {
@@ -43,7 +43,7 @@ export function getRcConfigForCwd(cwd: string, args: Array<string>): {[key: stri
 }
 
 export function getRcConfigForFolder(cwd: string): {[key: string]: string} {
-  const filePath = resolve(cwd, '.yarnrc');
+  const filePath = resolve(cwd, '.spkgmrc');
   if (!existsSync(filePath)) {
     return {};
   }
@@ -55,8 +55,8 @@ export function getRcConfigForFolder(cwd: string): {[key: string]: string} {
 function loadRcFile(fileText: string, filePath: string): {[key: string]: string} {
   let {object: values} = parse(fileText, filePath);
 
-  if (filePath.match(/\.yml$/) && typeof values.yarnPath === 'string') {
-    values = {'yarn-path': values.yarnPath};
+  if (filePath.match(/\.yml$/) && typeof values.spkgmPath === 'string') {
+    values = {'spkgm-path': values.spkgmPath};
   }
 
   // some keys reference directories so keep their relativity
@@ -69,7 +69,7 @@ function loadRcFile(fileText: string, filePath: string): {[key: string]: string}
   return values;
 }
 
-// get the built of arguments of a .yarnrc chain of the passed cwd
+// get the built of arguments of a .spkgmrc chain of the passed cwd
 function buildRcArgs(cwd: string, args: Array<string>): Map<string, Array<string>> {
   const config = getRcConfigForCwd(cwd, args);
 
@@ -119,7 +119,7 @@ function extractCwdArg(args: Array<string>): ?string {
   return null;
 }
 
-// get a list of arguments from .yarnrc that apply to this commandName
+// get a list of arguments from .spkgmrc that apply to this commandName
 export function getRcArgs(commandName: string, args: Array<string>, previousCwds?: Array<string> = []): Array<string> {
   // for the cwd, use the --cwd arg if it was passed or else use process.cwd()
   const origCwd = extractCwdArg(args) || process.cwd();
@@ -130,15 +130,15 @@ export function getRcArgs(commandName: string, args: Array<string>, previousCwds
   // concat wildcard arguments and arguments meant for this specific command
   const newArgs = [...(argMap.get('*') || []), ...(argMap.get(commandName) || [])];
 
-  // check if the .yarnrc args specified a cwd
+  // check if the .spkgmrc args specified a cwd
   const newCwd = extractCwdArg(newArgs);
   if (newCwd && newCwd !== origCwd) {
     // ensure that we don't enter into a loop
     if (previousCwds.indexOf(newCwd) !== -1) {
-      throw new Error(`Recursive .yarnrc files specifying --cwd flags. Bailing out.`);
+      throw new Error(`Recursive .spkgmrc files specifying --cwd flags. Bailing out.`);
     }
 
-    //  if we have a new cwd then let's refetch the .yarnrc args relative to it
+    //  if we have a new cwd then let's refetch the .spkgmrc args relative to it
     return getRcArgs(commandName, newArgs, previousCwds.concat(origCwd));
   }
 

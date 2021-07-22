@@ -35,7 +35,7 @@ type Release = {|
 
 function getBundleAsset(release: Release): ?ReleaseAsset {
   return release.assets.find(asset => {
-    return asset.name.match(/^yarn-[0-9]+\.[0-9]+\.[0-9]+\.js$/);
+    return asset.name.match(/^spkgm-[0-9]+\.[0-9]+\.[0-9]+\.js$/);
   });
 }
 
@@ -50,7 +50,7 @@ async function fetchReleases(
   const token = process.env.GITHUB_TOKEN;
   const tokenUrlParameter = token ? `?access_token=${token}` : '';
   const request: Array<Release> = await config.requestManager.request({
-    url: `https://api.github.com/repos/yarnpkg/yarn/releases${tokenUrlParameter}`,
+    url: `https://api.github.com/repos/spkgmpkg/spkgm/releases${tokenUrlParameter}`,
     json: true,
   });
 
@@ -117,10 +117,10 @@ const {run, setFlags, examples} = buildSubCommands('policies', {
     let isV2 = false;
 
     if (range === 'nightly' || range === 'nightlies') {
-      bundleUrl = 'https://nightly.yarnpkg.com/latest.js';
+      bundleUrl = 'https://nightly.spkgmpkg.com/latest.js';
       bundleVersion = 'nightly';
     } else if (range === 'berry' || range === 'v2' || range === '2') {
-      bundleUrl = 'https://github.com/yarnpkg/berry/raw/master/packages/berry-cli/bin/berry.js';
+      bundleUrl = 'https://github.com/spkgmpkg/berry/raw/master/packages/berry-cli/bin/berry.js';
       bundleVersion = 'berry';
       isV2 = true;
     } else {
@@ -155,25 +155,25 @@ const {run, setFlags, examples} = buildSubCommands('policies', {
 
     const bundle = await fetchBundle(config, bundleUrl);
 
-    const yarnPath = path.resolve(config.lockfileFolder, `.yarn/releases/yarn-${bundleVersion}.cjs`);
-    reporter.log(`Saving it into ${chalk.magenta(yarnPath)}...`);
-    await fs.mkdirp(path.dirname(yarnPath));
-    await fs.writeFile(yarnPath, bundle);
-    await fs.chmod(yarnPath, 0o755);
+    const spkgmPath = path.resolve(config.lockfileFolder, `.spkgm/releases/spkgm-${bundleVersion}.cjs`);
+    reporter.log(`Saving it into ${chalk.magenta(spkgmPath)}...`);
+    await fs.mkdirp(path.dirname(spkgmPath));
+    await fs.writeFile(spkgmPath, bundle);
+    await fs.chmod(spkgmPath, 0o755);
 
-    const targetPath = path.relative(config.lockfileFolder, yarnPath).replace(/\\/g, '/');
+    const targetPath = path.relative(config.lockfileFolder, spkgmPath).replace(/\\/g, '/');
 
     if (isV2) {
-      const rcPath = `${config.lockfileFolder}/.yarnrc.yml`;
+      const rcPath = `${config.lockfileFolder}/.spkgmrc.yml`;
       reporter.log(`Updating ${chalk.magenta(rcPath)}...`);
 
-      await fs.writeFilePreservingEol(rcPath, `yarnPath: ${JSON.stringify(targetPath)}\n`);
+      await fs.writeFilePreservingEol(rcPath, `spkgmPath: ${JSON.stringify(targetPath)}\n`);
     } else {
-      const rcPath = `${config.lockfileFolder}/.yarnrc`;
+      const rcPath = `${config.lockfileFolder}/.spkgmrc`;
       reporter.log(`Updating ${chalk.magenta(rcPath)}...`);
 
       const rc = getRcConfigForFolder(config.lockfileFolder);
-      rc['yarn-path'] = targetPath;
+      rc['spkgm-path'] = targetPath;
 
       await fs.writeFilePreservingEol(rcPath, `${stringify(rc)}\n`);
     }

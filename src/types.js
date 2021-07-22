@@ -163,7 +163,7 @@ export type Manifest = {
 
   workspaces?: Array<string> | WorkspacesConfig,
 
-  // This flag is true when we add a new package with `yarn add <mypackage>`.
+  // This flag is true when we add a new package with `spkgm add <mypackage>`.
   // We need to preserve the flag because we print a list of new packages in
   // the end of the add command
   fresh?: boolean,

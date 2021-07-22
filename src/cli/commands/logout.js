@@ -12,7 +12,7 @@ export function hasWrapper(commander: Object, args: Array<string>): boolean {
 }
 
 export async function run(config: Config, reporter: Reporter, flags: Object, args: Array<string>): Promise<void> {
-  await config.registries.yarn.saveHomeConfig({
+  await config.registries.spkgm.saveHomeConfig({
     username: undefined,
     email: undefined,
   });
